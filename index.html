@@ -3,250 +3,390 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Paw & Pour — Cat Cafe</title>
+<title>Paw & Pour — Cat Café Simulator</title>
 <style>
 :root{
-  --cream:#fff7e6; --sand:#e8d9c6; --coffee:#8b5e3c; --dark:#4e342e;
-  --pink:#f7b6c2; --sage:#a7c4a0; --green:#5b7f5b; --blue:#a7d8f0;
-  --yellow:#ffdfa7; --wood:#b9794b; --wood2:#d49a68; --red:#d86f6f;
+  --cream:#fff8e9;--paper:#fffdf7;--tan:#ead9bd;--wood:#9a633f;--wood2:#c58a59;
+  --espresso:#4a3029;--green:#648b62;--sage:#b8d0a9;--pink:#efabbc;--blue:#a9d8e8;
+  --gold:#e8b957;--red:#d86f6f;--shadow:0 10px 28px #4a30291c;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Trebuchet MS,system-ui,sans-serif;background:linear-gradient(135deg,#f6ead7,#dce8d3);color:var(--dark)}
-button{font:inherit;border:0;cursor:pointer}
+body{margin:0;color:var(--espresso);font-family:"Trebuchet MS",system-ui,sans-serif;background:
+radial-gradient(circle at 10% 10%,#fff8df 0 10%,transparent 30%),
+linear-gradient(135deg,#f5ead5,#dfead8);min-height:100vh}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.45}
 #app{min-height:100vh;display:flex;flex-direction:column}
-header{height:74px;background:#fffaf0ee;border-bottom:3px solid var(--sand);display:flex;align-items:center;gap:18px;padding:10px 22px;position:sticky;top:0;z-index:10;box-shadow:0 3px 14px #5b402022}
-.logo{font-weight:900;font-size:25px;color:var(--dark);white-space:nowrap}.logo span{color:var(--coffee)}
-.stats{display:flex;gap:10px;flex-wrap:wrap}.pill{background:white;border:2px solid var(--sand);border-radius:999px;padding:8px 13px;font-weight:800}
-nav{margin-left:auto;display:flex;gap:7px}nav button,.side button{background:#fff;border:2px solid var(--sand);border-radius:12px;padding:9px 12px;font-weight:800;color:var(--dark)}
+header{position:sticky;top:0;z-index:20;min-height:76px;padding:10px 18px;display:flex;align-items:center;gap:16px;
+background:#fffaf0f2;border-bottom:3px solid var(--tan);box-shadow:0 4px 18px #4a30291a}
+.logo{font-weight:1000;font-size:26px;white-space:nowrap}.logo b{color:var(--wood)}
+.logo small{display:block;font-size:9px;letter-spacing:2px;text-align:center;margin-top:-3px;color:#856b58}
+.stats{display:flex;gap:8px;flex-wrap:wrap}.pill{background:white;border:2px solid var(--tan);border-radius:999px;padding:8px 12px;font-weight:900}
+nav{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}nav button,.side button{border:2px solid var(--tan);background:white;color:var(--espresso);border-radius:12px;padding:9px 12px;font-weight:900}
 nav button.active,.side button.active{background:var(--green);color:white;border-color:var(--green)}
-main{display:flex;flex:1}.side{width:180px;padding:18px 12px;background:#fff9efaa;border-right:2px solid var(--sand);display:flex;flex-direction:column;gap:9px}.side button{text-align:left}
-.content{flex:1;padding:22px;max-width:1300px;margin:auto;width:100%}
-.screen{display:none}.screen.active{display:block}
-h1{margin:0 0 7px;font-size:30px}.sub{opacity:.75;margin-bottom:18px}
-.card{background:#fffaf0f5;border:2px solid var(--sand);border-radius:18px;box-shadow:0 8px 24px #5b40201a;padding:18px}
-.layout{display:grid;grid-template-columns:1fr 280px;gap:18px}
-.cafe{height:620px;position:relative;overflow:hidden;border:7px solid #6f472f;border-radius:20px;background:
-linear-gradient(90deg,#c88d5d 0 2px,transparent 2px 52px),
-linear-gradient(#c88d5d 0 2px,transparent 2px 52px),#d8a476;background-size:52px 52px}
-.wall{position:absolute;left:0;right:0;top:0;height:105px;background:linear-gradient(#9d6747,#b97850);border-bottom:9px solid #71452f}
-.sign{position:absolute;left:25px;top:20px;background:var(--cream);border:3px solid var(--coffee);padding:12px 20px;border-radius:14px;font-weight:900;font-size:22px}
-.counter{position:absolute;left:25px;right:25px;top:125px;height:92px;background:#805035;border:5px solid #5e3928;border-radius:15px;color:white;padding:15px}.machine{font-size:34px}.menu-board{position:absolute;right:35px;top:18px;background:#3d302a;color:#fff4dc;padding:9px 14px;border-radius:7px;font-weight:800}
-.table{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:150px;height:150px}.tabletop{position:absolute;left:20px;top:18px;width:110px;height:110px;background:#9b633e;border:6px solid #6e452e;border-radius:50%;box-shadow:0 7px 0 #70472f}.chair{position:absolute;width:44px;height:48px;background:#55735b;border:4px solid #3e5943;border-radius:12px}.c1{left:53px;top:-4px}.c2{left:53px;bottom:-5px}.plant{position:absolute;font-size:42px}.p1{left:25px;bottom:25px}.p2{right:25px;bottom:25px}.cat{position:absolute;font-size:54px;filter:drop-shadow(0 4px 2px #4e342e44);transition:.25s}.cat:hover{transform:scale(1.15) rotate(-4deg)}.cat1{left:19%;bottom:20%}.welcome{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);background:var(--cream);padding:8px 25px;border-radius:12px;border:3px solid var(--coffee);font-weight:900}
-.goals{margin-top:15px}.goal{padding:8px 0;border-bottom:1px solid var(--sand)}.done{color:var(--green);font-weight:900}
-.actions{display:grid;gap:10px}.bigbtn{padding:14px;border-radius:13px;background:var(--green);color:#fff;font-weight:900;font-size:16px}.bigbtn.alt{background:var(--coffee)}.bigbtn.yellow{background:#c99638}.bigbtn:disabled{opacity:.45;cursor:not-allowed}
-.orderbox{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:18px}.customer{min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.customer .face{font-size:110px}.speech{background:white;border:2px solid var(--sand);border-radius:18px;padding:14px;margin-top:10px;font-weight:800}
-.item{display:flex;align-items:center;gap:12px;padding:13px;background:#fff;border:2px solid var(--sand);border-radius:14px;margin-bottom:10px}.icon{font-size:42px}.price{margin-left:auto;font-weight:900}.hearts{font-size:25px;letter-spacing:2px}
-.kitchen{display:grid;grid-template-columns:1fr 320px;gap:18px}.station{min-height:470px;background:#d8d9d0;border:6px solid #746e65;border-radius:18px;padding:18px;position:relative}.shelf{height:55px;background:#8b6549;border-radius:8px;margin-bottom:20px}.espresso{font-size:90px;text-align:center;margin:35px}.progress{height:22px;background:#e2d6c6;border-radius:99px;overflow:hidden;border:2px solid var(--coffee)}.progress>div{height:100%;width:0;background:var(--green);transition:width .1s}
-.office{display:grid;grid-template-columns:1fr 1fr;gap:18px}.supply{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:12px;border-bottom:1px solid var(--sand)}.supply button{background:var(--green);color:white;padding:7px 10px;border-radius:8px;font-weight:800}.reportrow{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--sand);font-weight:800}
-.toast{position:fixed;right:20px;bottom:20px;background:var(--dark);color:white;padding:14px 18px;border-radius:12px;opacity:0;transform:translateY(20px);transition:.25s;z-index:99}.toast.show{opacity:1;transform:none}
-.modal{position:fixed;inset:0;background:#4e342e88;display:none;align-items:center;justify-content:center;z-index:50}.modal.show{display:flex}.modalbox{background:var(--cream);border:4px solid var(--coffee);border-radius:20px;padding:25px;max-width:520px;width:90%;text-align:center}
-@media(max-width:900px){.side{display:none}.orderbox,.layout,.kitchen,.office{grid-template-columns:1fr}.cafe{height:520px}nav{display:none}}
+main{display:flex;flex:1}.side{width:185px;padding:16px 11px;background:#fff9edaa;border-right:2px solid var(--tan);display:flex;flex-direction:column;gap:8px}
+.side button{text-align:left}.content{width:100%;max-width:1380px;margin:auto;padding:22px}.screen{display:none}.screen.active{display:block}
+h1{font-size:31px;margin:0 0 5px}h2{margin:0 0 12px}h3{margin:8px 0}.sub{opacity:.72;margin-bottom:18px}
+.card{background:#fffaf1f5;border:2px solid var(--tan);border-radius:19px;padding:17px;box-shadow:var(--shadow)}
+.btn{border:0;border-radius:13px;padding:12px 14px;font-weight:1000;transition:.15s}.btn:hover:not(:disabled){transform:translateY(-2px)}
+.primary{background:var(--green);color:#fff}.coffee{background:var(--wood);color:#fff}.gold{background:var(--gold);color:#4a3029}.pink{background:var(--pink);color:#4a3029}.light{background:white;border:2px solid var(--tan)}
+.layout{display:grid;grid-template-columns:minmax(500px,1fr) 310px;gap:18px}
+.cafe{height:620px;position:relative;overflow:hidden;border:8px solid #70472f;border-radius:22px;
+background:linear-gradient(90deg,#c28a5b 0 2px,transparent 2px 52px),linear-gradient(#c28a5b 0 2px,transparent 2px 52px),#d9aa78;background-size:52px 52px}
+.wall{position:absolute;left:0;right:0;top:0;height:110px;background:linear-gradient(#986345,#b8794d);border-bottom:8px solid #70472f}
+.wallDecor{position:absolute;right:25px;top:18px;font-size:28px}.sign{position:absolute;top:19px;left:25px;background:var(--cream);border:3px solid var(--wood);border-radius:14px;padding:10px 17px;font-size:23px;font-weight:1000}
+.menuBoard{position:absolute;top:17px;right:80px;background:#3f3029;color:#fff4d8;border-radius:8px;padding:8px 12px;text-align:center;font-size:12px;font-weight:900}
+.counter{position:absolute;top:128px;left:24px;right:24px;height:96px;background:#7d4d32;border:5px solid #5b3928;border-radius:15px;color:white;padding:12px 18px}
+.machine{font-size:36px;float:left;margin-right:10px}.counter b{font-size:18px}
+.table{position:absolute;width:175px;height:165px;left:50%;top:57%;transform:translate(-50%,-50%);transition:.3s}
+.tabletop{position:absolute;left:31px;top:26px;width:112px;height:112px;border-radius:50%;background:#9b633f;border:6px solid #6d452e;box-shadow:0 7px #70472f;display:grid;place-items:center;font-size:27px}
+.chair{position:absolute;width:45px;height:49px;background:#56745c;border:4px solid #3d5742;border-radius:11px}.chair.a{left:64px;top:-2px}.chair.b{left:64px;bottom:-2px}
+.plant{position:absolute;font-size:43px}.p1{left:25px;bottom:25px}.p2{right:25px;bottom:25px}
+.cafeCat{position:absolute;left:19%;bottom:20%;font-size:57px;filter:drop-shadow(0 5px 2px #4a302933);animation:breathe 2.4s infinite ease-in-out}
+.customerAvatar{position:absolute;left:72%;bottom:18%;font-size:64px;display:none;animation:walkin .8s ease-out}
+.customerAvatar.show{display:block}
+.welcome{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);background:var(--cream);border:3px solid var(--wood);padding:8px 25px;border-radius:12px;font-weight:1000}
+.expandFloor{position:absolute;right:18px;bottom:90px;width:120px;height:110px;border:4px dashed #8b6046;border-radius:15px;display:none;place-items:center;background:#d5a77b88;font-weight:900;text-align:center}.expandFloor.show{display:grid}
+@keyframes breathe{50%{transform:translateY(-5px)}}@keyframes walkin{from{transform:translateX(100px);opacity:0}to{transform:none;opacity:1}}
+.setup{display:grid;gap:11px}.statline{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--tan);font-weight:900}
+.goal{padding:8px 0;border-bottom:1px solid var(--tan)}.done{color:var(--green);font-weight:1000}
+.notice{background:#f5ead7;border-radius:13px;padding:12px;font-size:13px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--sage);font-size:11px;font-weight:900;margin:2px}
+.orderGrid{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:17px}.customerCard{min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.face{font-size:125px}.speech{background:white;border:2px solid var(--tan);border-radius:18px;padding:14px;margin-top:10px;font-weight:900;max-width:300px}
+.orderItem{display:flex;align-items:center;gap:12px;padding:13px;background:white;border:2px solid var(--tan);border-radius:14px;margin-bottom:10px}.icon{font-size:43px}.price{margin-left:auto;font-weight:1000}.hearts{font-size:24px;letter-spacing:2px}
+.kitchenGrid{display:grid;grid-template-columns:1fr 390px;gap:17px}.kitchenRoom{min-height:560px;background:#d8d9d0;border:6px solid #746e65;border-radius:19px;padding:18px;position:relative}
+.shelf{height:53px;background:#8a6248;border-radius:8px;margin-bottom:15px}.bigMachine{text-align:center;font-size:92px;margin:12px}.recipeMini{background:#fffaf0;border:2px solid var(--tan);border-radius:15px;padding:12px;margin:10px 0}
+.ingredientGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.ingredient{background:white;border:2px solid var(--tan);border-radius:12px;padding:10px;font-weight:900}.ingredient.selected{border-color:var(--green);background:#e5f0df}
+.progress{height:22px;background:#e7dcca;border:2px solid var(--wood);border-radius:999px;overflow:hidden}.progress>div{height:100%;width:0;background:var(--green);transition:width .1s}
+.recipeBook{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}.recipe{background:#fff;border:2px solid var(--tan);border-radius:16px;padding:15px}.recipe.locked{filter:grayscale(.8);opacity:.55}.recipeTitle{font-size:18px;font-weight:1000}.ingredients{margin:8px 0;font-size:13px;line-height:1.7}.menuGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:13px}.menuCard{background:white;border:2px solid var(--tan);border-radius:17px;padding:15px;display:flex;gap:13px}.menuIcon{font-size:50px}
+.officeGrid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.supply{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:center;padding:12px;border-bottom:1px solid var(--tan)}.supply button{background:var(--green);color:white;border:0;border-radius:9px;padding:7px 10px;font-weight:900}.report{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--tan);font-weight:900}
+.modal{position:fixed;inset:0;background:#4a302988;display:none;align-items:center;justify-content:center;z-index:50}.modal.show{display:flex}.modalbox{background:var(--cream);border:4px solid var(--wood);border-radius:22px;padding:25px;max-width:520px;width:92%;text-align:center}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--espresso);color:white;padding:13px 18px;border-radius:13px;opacity:0;transform:translateY(20px);transition:.25s;z-index:100}.toast.show{opacity:1;transform:none}
+.tabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}.tabs button{padding:9px 13px;border-radius:999px;border:2px solid var(--tan);background:white;font-weight:900}.tabs button.active{background:var(--green);color:#fff;border-color:var(--green)}
+@media(max-width:1000px){.side{display:none}.layout,.orderGrid,.kitchenGrid,.officeGrid{grid-template-columns:1fr}nav{display:none}}
+@media(max-width:650px){.content{padding:12px}.cafe{height:520px}.stats{font-size:12px}.logo{font-size:20px}.ingredientGrid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div id="app">
 <header>
-  <div class="logo">🐾 <span>Paw & Pour</span> <small>CAT CAFE</small></div>
+  <div class="logo">🐾 <b>Paw & Pour</b><small>CAT CAFÉ</small></div>
   <div class="stats">
     <div class="pill">🪙 $<span id="money">100</span></div>
     <div class="pill">☀️ Day <span id="day">1</span></div>
-    <div class="pill">👥 <span id="served">0</span> served</div>
+    <div class="pill">👥 <span id="served">0</span>/<span id="dailyGoal">8</span></div>
   </div>
   <nav>
-    <button data-screen="cafe" class="active">Cafe</button>
-    <button data-screen="orders">Orders</button>
-    <button data-screen="kitchen">Kitchen</button>
-    <button data-screen="office">Office</button>
+    <button data-screen="cafe" class="active">🏠 Café</button>
+    <button data-screen="orders">🧾 Orders</button>
+    <button data-screen="kitchen">🍳 Kitchen</button>
+    <button data-screen="recipes">📖 Recipes</button>
+    <button data-screen="office">📋 Office</button>
   </nav>
 </header>
 <main>
 <aside class="side">
   <button data-screen="cafe" class="active">🏠 Café Layout</button>
   <button data-screen="orders">🧾 Take Orders</button>
-  <button data-screen="kitchen">☕ Kitchen</button>
+  <button data-screen="kitchen">🍳 Kitchen</button>
+  <button data-screen="recipes">📖 Recipe Book</button>
+  <button data-screen="menu">🍰 Full Menu</button>
   <button data-screen="office">📋 Back Office</button>
-  <div class="card" style="margin-top:auto;font-size:13px">Prototype<br><b>1 customer • 1 latte • 1 table</b></div>
+  <div class="card" style="margin-top:auto;font-size:12px">FIRST DRAFT<br><b>8 customers / day</b><br><b>6 recipes</b><br><b>Manual crafting</b></div>
 </aside>
 
 <div class="content">
 <section id="cafe" class="screen active">
-  <h1>🌞 Start of Day</h1><div class="sub">Set up your café, then open the doors.</div>
+  <h1>🌞 Start of Day</h1><div class="sub">Set up the café, then open the doors. Your single table can serve customers one after another all day.</div>
   <div class="layout">
-    <div>
-      <div class="cafe">
-        <div class="wall"></div><div class="sign">🐾 Paw & Pour</div><div class="menu-board">TODAY<br>☕ Latte — $5</div>
-        <div class="counter">☕ <b>Counter</b><br><span style="opacity:.8">Espresso machine • milk • cups</span></div>
-        <div class="table"><div class="chair c1"></div><div class="chair c2"></div><div class="tabletop">🌿</div></div>
-        <div class="plant p1">🪴</div><div class="plant p2">🌿</div>
-        <div class="cat cat1" title="Your café cat">🐈</div>
-        <div class="welcome">🚪 OPEN AFTER SETUP</div>
-      </div>
+    <div class="cafe">
+      <div class="wall"></div><div class="sign">🐾 Paw & Pour</div><div class="menuBoard">TODAY<br>☕ 🧋 🍰</div><div class="wallDecor">🌿 🪴 🌿</div>
+      <div class="counter"><span class="machine">☕</span><b>Café Counter</b><br><span style="opacity:.78">Espresso • milk • tea • pastries</span></div>
+      <div class="table"><div class="chair a"></div><div class="chair b"></div><div class="tabletop">🌿</div></div>
+      <div class="plant p1">🪴</div><div class="plant p2">🌿</div><div class="cafeCat">🐈</div><div class="customerAvatar" id="cafeCustomer">👩🏻</div>
+      <div class="expandFloor" id="expandFloor">🏗️<br>NEW SPACE</div>
+      <div class="welcome" id="welcome">🚪 CLOSED — READY TO OPEN</div>
     </div>
     <div>
-      <div class="card actions">
-        <h2 style="margin:0">Café Setup</h2>
-        <div>Tables: <b id="tables">1</b>/1</div>
-        <button class="bigbtn" id="openBtn">☀️ Open Café</button>
-        <button class="bigbtn alt" id="upgradeTable">🪑 Upgrade Table — $40</button>
-        <button class="bigbtn yellow" id="expandBtn">🏗️ Expand Café — $75</button>
-        <div id="setupMessage" class="sub" style="margin:0">Your first customer is waiting to visit!</div>
+      <div class="card setup">
+        <h2>⚙️ Café Setup</h2>
+        <div class="statline"><span>Tables</span><span id="tables">1</span></div>
+        <div class="statline"><span>Customers today</span><span><span id="served2">0</span> / 8</span></div>
+        <button class="btn primary" id="openBtn">☀️ Open Café</button>
+        <button class="btn coffee" id="upgradeTable">🪑 Add 2nd Table — $40</button>
+        <button class="btn gold" id="expandBtn">🏗️ Expand Café — $75</button>
+        <div class="notice" id="setupMessage">When you open, a new customer will arrive. After each served customer, another can take the table.</div>
       </div>
-      <div class="card goals">
-        <h2>Today's Goals</h2>
-        <div class="goal" id="g1">⬜ Serve 1 customer</div>
-        <div class="goal" id="g2">⬜ Earn $5</div>
-        <div class="goal" id="g3">⬜ Finish your first shift</div>
+      <div class="card" style="margin-top:15px">
+        <h2>🎯 Today's Goals</h2>
+        <div class="goal" id="g1">⬜ Serve 8 customers</div>
+        <div class="goal" id="g2">⬜ Earn $40 in sales</div>
+        <div class="goal" id="g3">⬜ Finish the shift</div>
       </div>
     </div>
   </div>
 </section>
 
 <section id="orders" class="screen">
-  <h1>🧾 Order Window</h1><div class="sub">Take the customer's order, then send it to the kitchen.</div>
-  <div class="orderbox">
-    <div class="card customer">
-      <div class="face">👩🏻</div>
-      <div class="speech" id="speech">“Hi! I'd like a latte, please!”</div>
+  <h1>🧾 Order Window</h1><div class="sub">Customers can order different things. Take the order, then use the recipe book to make it.</div>
+  <div class="orderGrid">
+    <div class="card customerCard">
+      <div class="face" id="customerFace">👩🏻</div>
+      <div class="speech" id="speech">Open the café to welcome a customer!</div>
+      <div style="margin-top:14px"><span class="tag">Regular Customer</span><span class="tag">Patient</span></div>
     </div>
     <div class="card">
-      <h2>Customer Order</h2>
-      <div class="item"><div class="icon">☕</div><div><b>Latte</b><br><small>One warm latte</small></div><div class="price">$5</div></div>
-      <button class="bigbtn" id="takeOrder">🐾 Take Order</button>
-      <button class="bigbtn alt" id="serveReady" style="margin-top:10px" disabled>🍵 Serve Latte</button>
+      <h2>🧾 Current Order</h2>
+      <div id="orderEmpty" class="notice">No active customer.</div>
+      <div id="orderDetails" style="display:none">
+        <div class="orderItem"><div class="icon" id="orderIcon">☕</div><div><b id="orderName">Latte</b><br><small id="orderDescription">Warm espresso with milk</small></div><div class="price">$<span id="orderPrice">6</span></div></div>
+        <button class="btn primary" id="takeOrder">🧾 Take Order</button>
+        <div class="notice" style="margin-top:10px">After taking it, go to <b>Kitchen</b>. The recipe book will tell you exactly what ingredients and steps you need.</div>
+      </div>
     </div>
     <div class="card">
-      <h2>Customer</h2>
-      <div>Happiness</div><div class="hearts" id="hearts">❤️❤️❤️❤️🤍</div>
-      <hr>
-      <p>Fast service earns a better tip.</p>
-      <div class="item"><span>Order</span><b class="price">$5</b></div>
-      <div class="item"><span>Tip</span><b class="price">$1</b></div>
-      <h2>Total <span style="float:right">$6</span></h2>
+      <h2>❤️ Customer Info</h2>
+      <p>Happiness</p><div class="hearts" id="hearts">❤️❤️❤️❤️🤍</div>
+      <div class="report"><span>Order</span><span>$<span id="orderPrice2">6</span></span></div>
+      <div class="report"><span>Expected tip</span><span>$1–$3</span></div>
+      <div class="report"><span>Customers remaining</span><span id="remaining">8</span></div>
+      <button class="btn coffee" id="goKitchen" disabled>🍳 Go Make It</button>
     </div>
   </div>
 </section>
 
 <section id="kitchen" class="screen">
-  <h1>☕ Kitchen</h1><div class="sub">Make the latte. This first version has one recipe.</div>
-  <div class="kitchen">
-    <div class="station">
-      <div class="shelf"></div><div class="espresso">☕</div>
-      <h2>Latte Station</h2>
-      <p>Ingredients: coffee beans + milk</p>
+  <h1>🍳 Kitchen</h1><div class="sub">This is deliberately manual: read the recipe, add the ingredients, then make the item.</div>
+  <div class="kitchenGrid">
+    <div class="kitchenRoom">
+      <div class="shelf"></div><div class="bigMachine" id="kitchenEmoji">☕</div>
+      <div class="recipeMini">
+        <h2 id="kitchenName">No order</h2>
+        <div id="recipeSteps">Take a customer order first.</div>
+      </div>
+      <h3>Add Ingredients</h3>
+      <div class="ingredientGrid" id="ingredientButtons"></div>
+      <div style="margin:14px 0"><b>Recipe progress:</b> <span id="ingredientStatus">0 / 0 ingredients</span></div>
       <div class="progress"><div id="bar"></div></div>
       <p id="cookText">No order is being prepared.</p>
-      <button class="bigbtn" id="makeLatte" disabled>☕ Make Latte (5 sec)</button>
+      <button class="btn primary" id="makeItem" disabled>🍳 Prepare Item</button>
+      <button class="btn coffee" id="serveReady" disabled style="margin-top:8px">🍽️ Serve Customer</button>
     </div>
     <div class="card">
-      <h2>Current Order</h2>
-      <div class="item"><span class="icon">☕</span><span><b>Latte</b><br><small>Customer #1</small></span></div>
-      <div class="card" style="background:#f1eadf">💡 <b>Workflow</b><br><br>1. Take order<br>2. Make latte<br>3. Serve customer<br>4. Finish shift</div>
+      <h2>📌 Current Order</h2>
+      <div id="kitchenOrder" class="notice">No order yet.</div>
+      <button class="btn light" style="margin-top:10px;width:100%" id="openRecipeBook">📖 Open Recipe Book</button>
+      <div class="notice" style="margin-top:12px"><b>Manual crafting:</b> You must add every ingredient listed in the recipe before the Prepare button activates.</div>
     </div>
   </div>
+</section>
+
+<section id="recipes" class="screen">
+  <h1>📖 Recipe Book</h1><div class="sub">Every recipe is a little instruction card. Check it before you start making an order.</div>
+  <div class="recipeBook" id="recipeBook"></div>
+</section>
+
+<section id="menu" class="screen">
+  <h1>🍰 Full Menu</h1><div class="sub">These are the items customers may order in this first draft.</div>
+  <div class="menuGrid" id="menuGrid"></div>
 </section>
 
 <section id="office" class="screen">
-  <h1>📋 Back Office</h1><div class="sub">End the shift, order supplies, and check how your café is doing.</div>
-  <div class="office">
+  <h1>📋 Back Office</h1><div class="sub">Order supplies, review today's numbers, and close the shift when you're ready.</div>
+  <div class="officeGrid">
     <div class="card">
       <h2>📦 Supplies</h2>
-      <div class="supply"><b>☕ Coffee Beans</b><span id="beans">10</span><button data-buy="beans">Buy $10</button></div>
-      <div class="supply"><b>🥛 Milk</b><span id="milk">10</span><button data-buy="milk">Buy $10</button></div>
-      <div class="supply"><b>🥤 Cups</b><span id="cups">10</span><button data-buy="cups">Buy $10</button></div>
-      <p><small>Each latte uses 1 bean + 1 milk + 1 cup.</small></p>
+      <div id="supplyList"></div>
+      <p><small>Buying 5 units costs $10. Recipes consume the ingredients listed in the recipe book.</small></p>
     </div>
     <div class="card">
       <h2>📊 Shift Report</h2>
-      <div class="reportrow"><span>Customers served</span><span id="rServed">0</span></div>
-      <div class="reportrow"><span>Drink sales</span><span>$<span id="rSales">0</span></span></div>
-      <div class="reportrow"><span>Tips</span><span>$<span id="rTips">0</span></span></div>
-      <div class="reportrow"><span>Current cash</span><span>$<span id="rCash">100</span></span></div>
-      <button class="bigbtn" id="nextDay">🌙 Finish Shift & Start Next Day</button>
+      <div class="report"><span>Customers served</span><span id="rServed">0</span></div>
+      <div class="report"><span>Drink/food sales</span><span>$<span id="rSales">0</span></span></div>
+      <div class="report"><span>Tips</span><span>$<span id="rTips">0</span></span></div>
+      <div class="report"><span>Current cash</span><span>$<span id="rCash">100</span></span></div>
+      <div class="report"><span>Customers remaining</span><span id="rRemaining">8</span></div>
+      <button class="btn gold" id="nextDay" style="width:100%;margin-top:12px">🌙 Finish Shift & Start Next Day</button>
     </div>
   </div>
 </section>
-</div>
-</main>
+</div></main>
+
 <div class="toast" id="toast"></div>
-<div class="modal" id="modal"><div class="modalbox"><h1>🐾 Café Closed</h1><p id="modalText"></p><button class="bigbtn" id="modalBtn">Start Next Day</button></div></div>
-</div>
+<div class="modal" id="modal"><div class="modalbox"><h1>🌙 Shift Complete!</h1><p id="modalText"></p><button class="btn primary" id="modalBtn">☀️ Start Next Day</button></div></div>
 
 <script>
-const state={
-  money:100,day:1,served:0,sales:0,tips:0,tables:1,expanded:false,
-  open:false,orderTaken:false,latteReady:false,
-  supplies:{beans:10,milk:10,cups:10}
+const RECIPES={
+ latte:{name:"Latte",icon:"☕",price:6,desc:"Espresso, steamed milk, and a little foam.",ingredients:{beans:1,milk:2,cups:1},steps:["Pull one espresso shot.","Steam two portions of milk.","Pour milk into the espresso.","Add a little foam and serve."]},
+ icedCoffee:{name:"Iced Coffee",icon:"🧊",price:5,desc:"Chilled coffee over ice.",ingredients:{beans:1,ice:2,cups:1},steps:["Brew one coffee.","Add two portions of ice.","Pour coffee over the ice.","Serve cold."]},
+ strawberryBoba:{name:"Strawberry Boba",icon:"🧋",price:8,desc:"Strawberry milk tea with chewy boba.",ingredients:{tea:1,milk:1,strawberry:1,boba:1,cups:1},steps:["Brew tea.","Add strawberry syrup.","Add milk.","Add boba pearls.","Seal and serve."]},
+ matchaLatte:{name:"Matcha Latte",icon:"🍵",price:7,desc:"Creamy matcha with milk.",ingredients:{matcha:1,milk:2,cups:1},steps:["Whisk matcha.","Steam milk.","Combine matcha and milk.","Top with foam."]},
+ cookie:{name:"Cat Paw Cookie",icon:"🍪",price:4,desc:"A warm paw-print sugar cookie.",ingredients:{flour:1,sugar:1,butter:1,cookieBox:1},steps:["Mix flour, sugar, and butter.","Shape into a paw.","Bake the cookie.","Pack it for the customer."]},
+ croissant:{name:"Croissant",icon:"🥐",price:5,desc:"Buttery, flaky café pastry.",ingredients:{flour:2,butter:1,cookieBox:1},steps:["Prepare the dough.","Fold in butter.","Bake until golden.","Plate the croissant."]}
 };
-const $=id=>document.getElementById(id);
+const ING={
+ beans:{name:"Coffee Beans",icon:"☕",cost:10},milk:{name:"Milk",icon:"🥛",cost:10},cups:{name:"Cups",icon:"🥤",cost:10},
+ ice:{name:"Ice",icon:"🧊",cost:10},tea:{name:"Tea",icon:"🍵",cost:10},strawberry:{name:"Strawberry",icon:"🍓",cost:10},
+ boba:{name:"Boba Pearls",icon:"🟤",cost:10},matcha:{name:"Matcha",icon:"🍃",cost:10},flour:{name:"Flour",icon:"🌾",cost:10},
+ sugar:{name:"Sugar",icon:"🍚",cost:10},butter:{name:"Butter",icon:"🧈",cost:10},cookieBox:{name:"Pastry Boxes",icon:"📦",cost:10}
+};
+const faces=["👩🏻","👨🏽","👩🏾","👨🏻","👩🏼","👨🏾","👩🏽","👨🏼"];
+const state={
+ money:100,day:1,served:0,dailyGoal:8,sales:0,tips:0,tables:1,expanded:false,open:false,
+ order:null,orderTaken:false,added:{},itemReady:false,customerIndex:0,
+ supplies:{beans:10,milk:10,cups:10,ice:10,tea:10,strawberry:10,boba:10,matcha:10,flour:10,sugar:10,butter:10,cookieBox:10}
+};
+function $(id){return document.getElementById(id)}
+function save(){localStorage.setItem("pawPourSave2",JSON.stringify(state))}
+function load(){try{const s=JSON.parse(localStorage.getItem("pawPourSave2"));if(s)Object.assign(state,s)}catch(e){}}
 function money(n){return Math.max(0,Math.floor(n))}
-function save(){localStorage.setItem("pawPourSave",JSON.stringify(state))}
-function load(){try{let s=JSON.parse(localStorage.getItem("pawPourSave"));if(s)Object.assign(state,s)}catch(e){}}
-function update(){
-  $("money").textContent=money(state.money);$("day").textContent=state.day;$("served").textContent=state.served;
-  $("tables").textContent=state.tables;
-  for(const k of ["beans","milk","cups"])$(k).textContent=state.supplies[k];
-  $("rServed").textContent=state.served;$("rSales").textContent=state.sales;$("rTips").textContent=state.tips;$("rCash").textContent=money(state.money);
-  $("g1").className=state.served>0?"goal done":"goal";$("g1").textContent=state.served>0?"✅ Serve 1 customer":"⬜ Serve 1 customer";
-  $("g2").className=state.sales>0?"goal done":"goal";$("g2").textContent=state.sales>0?"✅ Earn $5":"⬜ Earn $5";
-  $("g3").className=state.day>1?"goal done":"goal";$("g3").textContent=state.day>1?"✅ Finish your first shift":"⬜ Finish your first shift";
-  $("openBtn").disabled=state.open;$("openBtn").textContent=state.open?"🟢 Café Open":"☀️ Open Café";
-  $("upgradeTable").disabled=state.tables>=2||state.money<40;
-  $("expandBtn").disabled=state.expanded||state.money<75;
-  $("takeOrder").disabled=!state.open||state.orderTaken||state.served>=1;
-  $("makeLatte").disabled=!state.orderTaken||state.latteReady;
-  $("serveReady").disabled=!state.latteReady;
-  $("speech").textContent=state.orderTaken&&!state.latteReady?"“Thank you! I'll wait for my latte!”":state.latteReady?"“That looks delicious!”":"“Hi! I'd like a latte, please!”";
-}
-function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2200)}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),2300)}
 function screen(name){
-  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
-  document.querySelectorAll("[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===name));
-  $(name).classList.add("active");save();
+ document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+ document.querySelectorAll("[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===name));
+ if($(name))$(name).classList.add("active");save()
 }
 document.querySelectorAll("[data-screen]").forEach(b=>b.onclick=()=>screen(b.dataset.screen));
-
-$("openBtn").onclick=()=>{state.open=true;toast("☀️ The café is open! A customer walks in.");screen("orders");update();save()};
+function randomOrder(){
+ const keys=Object.keys(RECIPES);
+ return keys[Math.floor(Math.random()*keys.length)];
+}
+function needForOrder(){
+ if(!state.order)return false;
+ const r=RECIPES[state.order];
+ return Object.entries(r.ingredients).every(([k,v])=>(state.added[k]||0)>=v);
+}
+function renderRecipes(){
+ $("recipeBook").innerHTML=Object.entries(RECIPES).map(([id,r])=>`
+ <div class="recipe">
+   <div class="recipeTitle">${r.icon} ${r.name} <span style="float:right">$${r.price}</span></div>
+   <div style="opacity:.75">${r.desc}</div>
+   <div class="ingredients"><b>Ingredients:</b><br>${Object.entries(r.ingredients).map(([k,v])=>`${ING[k].icon} ${v}× ${ING[k].name}`).join("<br>")}</div>
+   <b>Steps:</b><ol style="padding-left:20px">${r.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+ </div>`).join("");
+}
+function renderMenu(){
+ $("menuGrid").innerHTML=Object.entries(RECIPES).map(([id,r])=>`
+ <div class="menuCard"><div class="menuIcon">${r.icon}</div><div><b style="font-size:19px">${r.name}</b><div style="opacity:.7;margin:4px 0">${r.desc}</div><b>$${r.price}</b></div></div>`).join("");
+}
+function renderSupplies(){
+ $("supplyList").innerHTML=Object.entries(ING).map(([k,i])=>`
+ <div class="supply"><b>${i.icon} ${i.name}</b><span id="sup-${k}">${state.supplies[k]}</span><button data-buy="${k}">Buy +5 ($10)</button></div>`).join("");
+ document.querySelectorAll("[data-buy]").forEach(b=>b.onclick=()=>buySupply(b.dataset.buy));
+}
+function buySupply(k){
+ if(state.money<10)return toast("You need $10.");
+ state.money-=10;state.supplies[k]+=5;toast(`📦 +5 ${ING[k].name}`);update();save()
+}
+function newCustomer(){
+ if(!state.open || state.served>=state.dailyGoal)return;
+ state.customerIndex++;
+ state.order=randomOrder();state.orderTaken=false;state.added={};state.itemReady=false;
+ $("customerAvatar").classList.add("show");$("customerAvatar").textContent=faces[(state.customerIndex-1)%faces.length];
+ $("customerFace").textContent=faces[(state.customerIndex-1)%faces.length];
+ const r=RECIPES[state.order];
+ $("speech").textContent=`“Hi! I'd like a ${r.name.toLowerCase()}, please!”`;
+ update();screen("orders");toast(`👋 Customer ${state.customerIndex} has arrived!`)
+}
+$("openBtn").onclick=()=>{
+ if(state.open)return;
+ state.open=true;$("welcome").textContent="🟢 OPEN — WELCOME IN!";toast("☀️ Café open! A customer is arriving...");setTimeout(newCustomer,600);update();save()
+};
 $("upgradeTable").onclick=()=>{
-  if(state.tables>=2)return toast("You already have the starter table.");
-  if(state.money<40)return toast("You need $40.");
-  state.money-=40;state.tables=2;toast("🪑 Table upgraded! More guests can visit later.");update();save()
+ if(state.tables>=2)return toast("The second table is already installed.");
+ if(state.money<40)return toast("You need $40.");
+ state.money-=40;state.tables=2;toast("🪑 Added a second table!");update();save()
 };
 $("expandBtn").onclick=()=>{
-  if(state.money<75)return toast("You need $75 to expand.");
-  state.money-=75;state.expanded=true;toast("🏗️ Café expanded! More space is unlocked.");update();save()
+ if(state.expanded)return toast("The café is already expanded.");
+ if(state.money<75)return toast("You need $75.");
+ state.money-=75;state.expanded=true;$("expandFloor").classList.add("show");toast("🏗️ Café expanded!");update();save()
 };
 $("takeOrder").onclick=()=>{
-  if(state.supplies.beans<1||state.supplies.milk<1||state.supplies.cups<1)return toast("📦 You're out of supplies! Check the office.");
-  state.orderTaken=true;toast("🧾 Order sent to the kitchen!");screen("kitchen");update();save()
+ if(!state.order||!state.open)return;
+ state.orderTaken=true;toast("🧾 Order taken! Check the recipe book.");$("goKitchen").disabled=false;screen("kitchen");update();save()
 };
-$("makeLatte").onclick=()=>{
-  if(!state.orderTaken||state.latteReady)return;
-  $("makeLatte").disabled=true;$("cookText").textContent="Steaming milk and pulling espresso...";
-  let start=Date.now(),dur=5000;
-  let timer=setInterval(()=>{
-    let p=Math.min(1,(Date.now()-start)/dur);$("bar").style.width=(p*100)+"%";
-    if(p>=1){clearInterval(timer);state.latteReady=true;state.supplies.beans--;state.supplies.milk--;state.supplies.cups--;toast("☕ Perfect! The latte is ready.");$("cookText").textContent="Latte ready to serve!";update();save()}
-  },50)
+$("goKitchen").onclick=()=>screen("kitchen");
+$("openRecipeBook").onclick=()=>screen("recipes");
+function renderKitchen(){
+ if(!state.order){
+   $("kitchenName").textContent="No order";$("recipeSteps").textContent="Take a customer order first.";return;
+ }
+ const r=RECIPES[state.order];
+ $("kitchenEmoji").textContent=r.icon;$("kitchenName").textContent=`${r.icon} ${r.name}`;
+ $("recipeSteps").innerHTML=`<b>Steps:</b> ${r.steps.join(" → ")}`;
+ const keys=Object.keys(r.ingredients);
+ $("ingredientButtons").innerHTML=keys.map(k=>{
+   const target=r.ingredients[k],have=state.added[k]||0,stock=state.supplies[k]||0;
+   return `<button class="ingredient ${have>=target?'selected':''}" data-ing="${k}" ${have>=target||stock<1||state.itemReady?'disabled':''}>
+     ${ING[k].icon} ${ING[k].name}<br><small>${have}/${target} added • ${stock} in stock</small>
+   </button>`
+ }).join("");
+ document.querySelectorAll("[data-ing]").forEach(b=>b.onclick=()=>addIngredient(b.dataset.ing));
+ const total=Object.values(r.ingredients).reduce((a,b)=>a+b,0),added=Object.values(r.ingredients).reduce((a,v)=>a+Math.min(v,state.added[Object.keys(r.ingredients)[Object.values(r.ingredients).indexOf(v)]]||0),0);
+ let actual=Object.entries(r.ingredients).reduce((a,[k,v])=>a+Math.min(v,state.added[k]||0),0);
+ $("ingredientStatus").textContent=`${actual} / ${total} ingredients`;
+ $("bar").style.width=(actual/total*100)+"%";
+ $("makeItem").disabled=!needForOrder()||state.itemReady;
+ $("serveReady").disabled=!state.itemReady;
+ $("kitchenOrder").innerHTML=`<b>${r.icon} ${r.name}</b><br>$${r.price}<br><small>${state.itemReady?"READY TO SERVE":"Add every required ingredient."}</small>`;
+}
+function addIngredient(k){
+ if(!state.order)return;
+ const r=RECIPES[state.order],target=r.ingredients[k]||0,have=state.added[k]||0;
+ if(have>=target)return;
+ state.added[k]=have+1;toast(`${ING[k].icon} Added ${ING[k].name}`);renderKitchen();save()
+}
+$("makeItem").onclick=()=>{
+ if(!needForOrder())return toast("📖 Check the recipe and add every ingredient.");
+ const r=RECIPES[state.order];
+ for(const [k,v] of Object.entries(r.ingredients))state.supplies[k]-=v;
+ state.itemReady=true;$("cookText").textContent=`${r.icon} ${r.name} is ready!`;
+ toast(`${r.icon} Perfect! ${r.name} is ready.`);renderKitchen();renderSupplies();update();save()
 };
 $("serveReady").onclick=()=>{
-  if(!state.latteReady)return;
-  state.money+=6;state.sales+=5;state.tips+=1;state.served++;state.orderTaken=false;state.latteReady=false;
-  state.open=false;$("bar").style.width="0%";$("cookText").textContent="No order is being prepared.";
-  toast("💰 Customer paid $6! Nice work.");screen("cafe");update();save()
+ if(!state.itemReady||!state.order)return;
+ const r=RECIPES[state.order],tip=1+Math.floor(Math.random()*3);
+ state.money+=r.price+tip;state.sales+=r.price;state.tips+=tip;state.served++;
+ state.order=null;state.orderTaken=false;state.added={};state.itemReady=false;
+ $("cafeCustomer").classList.remove("show");$("welcome").textContent="🟡 CUSTOMER SERVED — NEXT GUEST SOON";
+ toast(`💰 $${r.price} sale + $${tip} tip!`);
+ update();save();
+ if(state.served>=state.dailyGoal){
+   state.open=false;$("welcome").textContent="🌙 SHIFT COMPLETE — GO TO OFFICE";toast("🎉 You served everyone for today!");
+ }else{
+   setTimeout(()=>newCustomer(),900)
+ }
+ screen("cafe")
 };
-document.querySelectorAll("[data-buy]").forEach(b=>b.onclick=()=>{
-  const k=b.dataset.buy;if(state.money<10)return toast("Not enough money.");
-  state.money-=10;state.supplies[k]+=5;toast("📦 +5 "+k);update();save()
-});
-$("nextDay").onclick=finishShift;
+$("nextDay").onclick=()=>{
+ if(state.open&&state.order)return toast("Finish the current customer's order first.");
+ finishShift()
+};
 function finishShift(){
-  state.day++;state.open=false;state.orderTaken=false;state.latteReady=false;
-  state.sales=0;state.tips=0;state.served=0;
-  $("modalText").textContent="Your shift is complete! The café is ready for Day "+state.day+".";
-  $("modal").classList.add("show");update();save()
+ state.day++;state.served=0;state.sales=0;state.tips=0;state.open=false;state.order=null;state.orderTaken=false;state.added={};state.itemReady=false;state.customerIndex=0;
+ $("modalText").textContent=`Great work! Day ${state.day} is ready. You can open the café and serve ${state.dailyGoal} new customers.`;
+ $("modal").classList.add("show");update();save()
 }
-$("modalBtn").onclick=()=>{$("modal").classList.remove("show");screen("cafe");update();save()};
-load();update();
+$("modalBtn").onclick=()=>{$("modal").classList.remove("show");$("welcome").textContent="🚪 CLOSED — READY TO OPEN";screen("cafe");update()};
+function update(){
+ $("money").textContent=money(state.money);$("day").textContent=state.day;$("served").textContent=state.served;$("served2").textContent=state.served;
+ $("dailyGoal").textContent=state.dailyGoal;$("tables").textContent=state.tables;$("remaining").textContent=Math.max(0,state.dailyGoal-state.served);
+ $("rServed").textContent=state.served;$("rSales").textContent=state.sales;$("rTips").textContent=state.tips;$("rCash").textContent=money(state.money);$("rRemaining").textContent=Math.max(0,state.dailyGoal-state.served);
+ $("openBtn").disabled=state.open||state.served>=state.dailyGoal;$("openBtn").textContent=state.open?"🟢 Café Open":"☀️ Open Café";
+ $("upgradeTable").disabled=state.tables>=2||state.money<40;$("expandBtn").disabled=state.expanded||state.money<75;
+ $("takeOrder").disabled=!state.order||state.orderTaken;$("goKitchen").disabled=!state.orderTaken;
+ $("orderEmpty").style.display=state.order?"none":"block";$("orderDetails").style.display=state.order?"block":"none";
+ if(state.order){
+   const r=RECIPES[state.order];$("orderIcon").textContent=r.icon;$("orderName").textContent=r.name;$("orderDescription").textContent=r.desc;$("orderPrice").textContent=r.price;$("orderPrice2").textContent=r.price;
+ }
+ $("hearts").textContent=state.orderTaken?"❤️❤️❤️❤️❤️":"❤️❤️❤️❤️🤍";
+ $("g1").className=state.served>=8?"goal done":"goal";$("g1").textContent=state.served>=8?"✅ Serve 8 customers":`⬜ Serve 8 customers (${state.served}/8)`;
+ $("g2").className=state.sales>=40?"goal done":"goal";$("g2").textContent=state.sales>=40?"✅ Earn $40 in sales":`⬜ Earn $40 in sales ($${state.sales}/40)`;
+ $("g3").className=state.day>1?"goal done":"goal";$("g3").textContent=state.day>1?"✅ Finish the shift":"⬜ Finish the shift";
+ renderKitchen();renderSupplies()
+}
+load();renderRecipes();renderMenu();renderSupplies();update();
 </script>
 </body>
 </html>
